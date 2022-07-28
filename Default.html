@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        body
+        {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+        table
+        {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+        
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        window.onload = function () {
+            //Build an array containing Customer records.
+            var customers = new Array();
+            customers.push(["", "","","",""]);
+            customers.push(["", "","","",""]);
+            customers.push(["", "","","",""]);
+            customers.push(["", "","","",""]);
+
+            //Add the data rows.
+            for (var i = 0; i < customers.length; i++) {
+                AddRow(customers[i][0], customers[i][1], customers[i][2], customers[i][3], customers[i][4]);
+            }
+        };
+
+        function Add() {
+            var txtPart = document.getElementById("txtPart");
+            var txtManufacturer = document.getElementById("txtManufacturer");
+            var txtDescription = document.getElementById("txtDescription");
+
+            var numQuantity = document.getElementById("numQuantity");
+
+            var txtTargetprice = document.getElementById("txtTargetprice");
+
+
+            AddRow(txtPart.value, txtManufacturer.value, txtDescription.value, numQuantity.value, txtTargetprice.value);
+            txtPart.value = "";
+            txtManufacturer.value = "";
+            txtDescription.value = "";
+            numQuantity.value = "";
+            txtTargetprice.value = "";
+        };
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = button.parentNode.parentNode;
+            var name = row.getElementsByTagName("TD")[0].innerHTML;
+            if (confirm("Do you want to delete: " + name)) {
+
+                //Get the reference of the Table.
+                var table = document.getElementById("tblCustomers");
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row.rowIndex);
+            }
+        };
+
+        function AddRow(Part, Manufacturer, Description, Quantity, Targetprice) {
+            //Get the reference of the Table's TBODY element.
+            var tBody = document.getElementById("tblCustomers").getElementsByTagName("TBODY")[0];
+
+            //Add Row.
+            row = tBody.insertRow(-1);
+
+            //Add Part cell.
+            var cell = row.insertCell(-1);
+            cell.innerHTML = Part;
+
+            //Add Manufacturer cell.
+            cell = row.insertCell(-1);
+            cell.innerHTML = Manufacturer;
+
+            //Add Description Cell
+            cell = row.insertCell(-1);
+            cell.innerHTML = Description;
+
+            //Add Quantity Cell
+            cell = row.insertCell(-1);
+            cell.innerHTML = Quantity;
+
+            //Add target Price Cell
+            cell = row.insertCell(-1);
+            cell.innerHTML = Targetprice;
+
+
+
+
+            //Add Button cell.
+            cell = row.insertCell(-1);
+            var btnRemove = document.createElement("INPUT");
+            btnRemove.type = "button";
+            btnRemove.value = "Remove";
+            btnRemove.setAttribute("onclick", "Remove(this);");
+            cell.appendChild(btnRemove);
+        }
+    </script>
+            <form action="insert.php" method="post">
+    <table id="tblCustomers" cellpadding="0" cellspacing="0" border="1">
+        <thead>
+            <tr>
+                <th>Part Number</th>
+                <th>Manufacturer</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>target Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><input type="text" id="txtPart" /></td>
+                <td><input type="text" id="txtManufacturer" /></td>
+                <td><input type="text" id="txtDescription" /></td>
+                <td><input type="number" id="numQuantity" /></td>
+                <td><input type="text" id="txtTargetprice" /></td>
+                <td><input type="button" onclick="Add()" value="Add" /></td>
+            </tr>
+        </tfoot>
+    </table>
+            </form>
+    
+</body>
+</html>
